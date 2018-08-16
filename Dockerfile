@@ -16,6 +16,7 @@ RUN set -x && \
       ncurses-dev \
       unzip \
       git \
+      curl \
       python \
       python-zmq \
       zlib1g-dev \
@@ -28,13 +29,13 @@ RUN set -x && \
 RUN set -x && \
     git clone https://github.com/zcash/zcash.git /tmp/zcash && \
     cd /tmp/zcash && \
-    git checkout v1.0.12 && \
+    git checkout v1.1.2 && \
     bash zcutil/fetch-params.sh
 
 # Build the app
 RUN set -x && \
     cd /tmp/zcash && \
-    bash zcutil/build.sh --disable-rust -j$(nproc)
+    bash zcutil/build.sh -j$(nproc)
 
 # Copy binaries and libs from builder to a separate image
 FROM debian:jessie-slim
